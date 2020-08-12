@@ -17,3 +17,4 @@ requests
 unidecode
 Pillow
 telethon
+openpyxl
