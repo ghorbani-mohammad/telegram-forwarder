@@ -2,17 +2,10 @@ version: '3'
 
 services:
 
-  # telegram_db:
-  #   container_name: telegram_db
-  #   image: mdillon/postgis:11
-  #   restart: unless-stopped
-
   telegram_api:
     container_name: telegram_api
     build: .
     restart: unless-stopped
-    # depends_on:
-    #   - telegram_db
     volumes:
       - .:/app
     ports:
@@ -21,31 +14,29 @@ services:
     environment:
       DEBUG: 'True'
 
-  # telegram_celery:
-  #   container_name: telegram_celery
-  #   build: .
-  #   working_dir: /app/telegram
-  #   command: ["celery", "-A", "telegram", "worker", "-l", "info"]
-  #   restart: unless-stopped
-  #   volumes:
-  #     - .:/app
-  #   depends_on:
-  #     - telegram_db
-  #     - telegram_redis
+  telegram_celery:
+    container_name: telegram_celery
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_redis
 
-  # telegram_beat:
-  #   container_name: telegram_beat
-  #   build: .
-  #   working_dir: /app/telegram
-  #   command: ["celery", "-A", "telegram", "beat", "-l", "info"]
-  #   restart: unless-stopped
-  #   volumes:
-  #     - .:/app
-  #   depends_on:
-  #     - telegram_db
-  #     - telegram_redis
+  telegram_beat:
+    container_name: telegram_beat
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "beat", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_redis
 
-  # telegram_redis:
-  #   container_name : telegram_redis
-  #   image: redis:5.0.8
-  #   restart: unless-stopped
+  telegram_redis:
+    container_name : telegram_redis
+    image: redis:5.0.8
+    restart: unless-stopped
