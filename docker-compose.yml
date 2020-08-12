@@ -2,10 +2,17 @@ version: '3'
 
 services:
 
+  telegram_db:
+    container_name: telegram_db
+    image: mdillon/postgis:11
+    restart: unless-stopped
+
   telegram_api:
     container_name: telegram_api
     build: .
     restart: unless-stopped
+    depends_on:
+      - telegram_db
     volumes:
       - .:/app
     ports:
@@ -23,6 +30,7 @@ services:
     volumes:
       - .:/app
     depends_on:
+      - telegram_db
       - telegram_redis
 
   telegram_beat:
@@ -34,6 +42,7 @@ services:
     volumes:
       - .:/app
     depends_on:
+      - telegram_db
       - telegram_redis
 
   telegram_redis:
