@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROJECT_NAME='Telegram'
+PROJECT_NAME='telegram'
 SERVER_NAME='keylid1'
 SERVER_PATH='/var/www/igap_inf/'
 
