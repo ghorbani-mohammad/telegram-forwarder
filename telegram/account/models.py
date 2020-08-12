@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -28,6 +29,12 @@ class Account(BaseModel):
     phone = models.CharField(max_length=14)
     api_id = models.PositiveIntegerField()
     api_hash = models.CharField(max_length=100)
+    log_in_code = models.PositiveIntegerField(null=True, blank=True)
+    delay_between_msg = models.PositiveIntegerField(default=5)
+    ids = ArrayField(models.CharField(max_length=50), blank=True, null=True)
+
+    msg = models.TextField(null=True, blank=True)
+    admin_username = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.phone
