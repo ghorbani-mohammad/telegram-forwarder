@@ -2,50 +2,50 @@ version: '3'
 
 services:
 
-  Telegram_db:
-    container_name: Telegram_db
-    image: mdillon/postgis:11
-    restart: unless-stopped
+  # telegram_db:
+  #   container_name: telegram_db
+  #   image: mdillon/postgis:11
+  #   restart: unless-stopped
 
-  Telegram_api:
-    container_name: Telegram_api
+  telegram_api:
+    container_name: telegram_api
     build: .
     restart: unless-stopped
-    depends_on:
-      - Telegram_db
+    # depends_on:
+    #   - telegram_db
     volumes:
       - .:/app
     ports:
       - 9080:80
-    command: ["python", "/app/Telegram/manage.py", "runserver", "0:80"]
+    command: ["python", "/app/telegram/manage.py", "runserver", "0:80"]
     environment:
       DEBUG: 'True'
 
-  Telegram_celery:
-    container_name: Telegram_celery
-    build: .
-    working_dir: /app/Telegram
-    command: ["celery", "-A", "Telegram", "worker", "-l", "info"]
-    restart: unless-stopped
-    volumes:
-      - .:/app
-    depends_on:
-      - Telegram_db
-      - Telegram_redis
+  # telegram_celery:
+  #   container_name: telegram_celery
+  #   build: .
+  #   working_dir: /app/telegram
+  #   command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+  #   restart: unless-stopped
+  #   volumes:
+  #     - .:/app
+  #   depends_on:
+  #     - telegram_db
+  #     - telegram_redis
 
-  Telegram_beat:
-    container_name: Telegram_beat
-    build: .
-    working_dir: /app/Telegram
-    command: ["celery", "-A", "Telegram", "beat", "-l", "info"]
-    restart: unless-stopped
-    volumes:
-      - .:/app
-    depends_on:
-      - Telegram_db
-      - Telegram_redis
+  # telegram_beat:
+  #   container_name: telegram_beat
+  #   build: .
+  #   working_dir: /app/telegram
+  #   command: ["celery", "-A", "telegram", "beat", "-l", "info"]
+  #   restart: unless-stopped
+  #   volumes:
+  #     - .:/app
+  #   depends_on:
+  #     - telegram_db
+  #     - telegram_redis
 
-  Telegram_redis:
-    container_name : Telegram_redis
-    image: redis:5.0.8
-    restart: unless-stopped
+  # telegram_redis:
+  #   container_name : telegram_redis
+  #   image: redis:5.0.8
+  #   restart: unless-stopped
