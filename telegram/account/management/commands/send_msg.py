@@ -13,7 +13,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         account_id = options['account_id']
-        account = acc_models.Account.objects.get(pk=account_id)
+        try:
+            account = acc_models.Account.objects.get(pk=account_id)
+        except:
+            print('eror to find account')
+            exit()
         print('***** Send msg... {}, time: {}'.format(account.phone, timezone.now()))
         client = TelegramClient(account.phone, account.api_id, account.api_hash)
 
