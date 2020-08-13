@@ -35,6 +35,7 @@ class Command(BaseCommand):
                 account = acc_models.Account.objects.get(pk=account_id)
                 print('msg from admin')
                 for id in account.ids:
+                    time.sleep(account.delay_between_msg)
                     try:
                         await event.forward_to(id)
                     except Exception as e:
