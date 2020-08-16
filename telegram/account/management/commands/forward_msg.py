@@ -26,9 +26,9 @@ class Command(BaseCommand):
             client.start()
 
 
+        account = acc_models.Account.objects.get(pk=account_id)
         @client.on(events.NewMessage(incoming=True))
         async def my_event_handler(event):
-            account = acc_models.Account.objects.get(pk=account_id)
             chat = await event.get_chat()
             sender = await event.get_sender()
             if sender.username == account.admin_username:

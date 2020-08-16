@@ -36,5 +36,15 @@ class Account(BaseModel):
     msg = models.TextField(null=True, blank=True)
     admin_username = models.CharField(max_length=50, null=True, blank=True)
 
+    FORWARDING = "forward"
+    TEXT = "text"
+    score_strategy = models.CharField(
+        max_length=10,
+        choices=(
+            (FORWARDING, "فوروارد"),
+            (TEXT, "متن"),
+        ),
+    )
+
     def __str__(self):
         return self.phone

@@ -31,6 +31,7 @@ class Command(BaseCommand):
         #     print('error')
 
         for id in account.ids:
+            print('send msg to {}'.format(id))
             client.send_message(id, account.msg)
             time.sleep(account.delay_between_msg)
 
