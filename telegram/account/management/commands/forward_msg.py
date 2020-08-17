@@ -22,7 +22,7 @@ class Command(BaseCommand):
         try:
             client.connect()
             me = client.get_me()
-            print(me.username)
+            # print(me.username)
         except sqlite3.OperationalError:
             print("database locked")
             return
