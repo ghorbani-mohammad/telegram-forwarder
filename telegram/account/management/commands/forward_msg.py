@@ -16,27 +16,20 @@ class Command(BaseCommand):
         account_id = options['account_id']
         account = acc_models.Account.objects.get(pk=account_id)
         print('***** Forward msg... {}'.format(account.phone))
-        client = TelegramClient(account.phone, account.api_id, account.api_hash)
-
-
-        try:
-            client.connect()
-            me = client.get_me()
-            # print(me.username)
-        except sqlite3.OperationalError:
-            print("database locked")
-            return
+        client = TelegramClient(None, account.api_id, account.api_hash)
 
         try:
             assert client.connect()
-            # print('***** Forward msg: client is connected before so exit')
         except AssertionError:
             if not client.is_user_authorized():
                 client.send_code_request(account.phone)
+            print('before')
+            time.sleep(30)
+            print('after')
+            account = acc_models.Account.objects.get(pk=account_id)
+            print(account.log_in_code)
             me = client.sign_in(account.phone, account.log_in_code)
             client.start()
-
-        
 
         @client.on(events.NewMessage(incoming=True))
         async def my_event_handler(event):
