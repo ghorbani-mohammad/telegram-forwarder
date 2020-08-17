@@ -4,6 +4,8 @@ import time
 from django.utils import timezone
 from django.core.management.base import BaseCommand
 from telethon import TelegramClient, events, sync
+from telethon.errors import PhoneCodeInvalidError, ApiIdInvalidError, FloodWaitError
+
 
 from account import models as acc_models
 
@@ -16,6 +18,7 @@ class Command(BaseCommand):
         account_id = options['account_id']
         account = acc_models.Account.objects.get(pk=account_id)
         print('***** Forward msg... {}'.format(account.phone))
+        
         client = TelegramClient(None, account.api_id, account.api_hash)
 
         try:
@@ -24,12 +27,21 @@ class Command(BaseCommand):
             if not client.is_user_authorized():
                 client.send_code_request(account.phone)
             print('before')
-            time.sleep(30)
+            time.sleep(120)
             print('after')
             account = acc_models.Account.objects.get(pk=account_id)
             print(account.log_in_code)
-            me = client.sign_in(account.phone, account.log_in_code)
-            client.start()
+            if account.log_in_code is None:
+                return 'phone code invalid'
+            try:
+                me = client.sign_in(account.phone, account.log_in_code)
+                client.start()
+            except PhoneCodeInvalidError:
+                return 'phone code invalid'
+        except ApiIdInvalidError:
+            return 'api invalid'
+        except FloodWaitError:
+            return 'flood error'
 
         @client.on(events.NewMessage(incoming=True))
         async def my_event_handler(event):
