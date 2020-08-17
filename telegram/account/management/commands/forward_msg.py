@@ -1,4 +1,5 @@
 # from asgiref.sync import sync_to_async
+import sqlite3
 import time
 from django.utils import timezone
 from django.core.management.base import BaseCommand
@@ -14,25 +15,34 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         account_id = options['account_id']
         account = acc_models.Account.objects.get(pk=account_id)
-        print('***** Forward msg... {}, time: {}'.format(account.phone, timezone.now()))
+        print('***** Forward msg... {}'.format(account.phone))
         client = TelegramClient(account.phone, account.api_id, account.api_hash)
+
+
+        try:
+            client.connect()
+            me = client.get_me()
+            print(me.username)
+        except sqlite3.OperationalError:
+            print("database locked")
+            return
 
         try:
             assert client.connect()
+            # print('***** Forward msg: client is connected before so exit')
         except AssertionError:
             if not client.is_user_authorized():
                 client.send_code_request(account.phone)
             me = client.sign_in(account.phone, account.log_in_code)
             client.start()
 
+        
 
-        account = acc_models.Account.objects.get(pk=account_id)
         @client.on(events.NewMessage(incoming=True))
         async def my_event_handler(event):
             chat = await event.get_chat()
             sender = await event.get_sender()
             if sender.username == account.admin_username:
-                account = acc_models.Account.objects.get(pk=account_id)
                 print('msg from admin')
                 for id in account.ids:
                     time.sleep(account.delay_between_msg)
@@ -43,7 +53,6 @@ class Command(BaseCommand):
                         print(str(e))
                         continue
                     time.sleep(account.delay_between_msg)
-                client.disconnect()
 
 
         client.run_until_disconnected()

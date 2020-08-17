@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.core.validators import MinValueValidator 
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -30,21 +31,12 @@ class Account(BaseModel):
     api_id = models.PositiveIntegerField()
     api_hash = models.CharField(max_length=100)
     log_in_code = models.PositiveIntegerField(null=True, blank=True)
-    delay_between_msg = models.PositiveIntegerField(default=5)
-    ids = ArrayField(models.CharField(max_length=50), blank=True, null=True)
+    delay_between_msg = models.PositiveIntegerField(default=5, validators=[MinValueValidator(2)], help_text='delay between each send message')
+    ids = ArrayField(models.CharField(max_length=50), blank=True, null=True, help_text='telegram accounts id')
 
     msg = models.TextField(null=True, blank=True)
     admin_username = models.CharField(max_length=50, null=True, blank=True)
 
-    FORWARDING = "forward"
-    TEXT = "text"
-    score_strategy = models.CharField(
-        max_length=10,
-        choices=(
-            (FORWARDING, "فوروارد"),
-            (TEXT, "متن"),
-        ),
-    )
 
     def __str__(self):
         return self.phone
