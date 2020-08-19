@@ -6,6 +6,8 @@ services:
     container_name: telegram_db
     image: mdillon/postgis:11
     restart: unless-stopped
+    volumes:
+      - telegram_db:/var/lib/postgresql/data
 
   telegram_api:
     container_name: telegram_api
@@ -16,22 +18,10 @@ services:
     volumes:
       - .:/app
     ports:
-      - 9080:80
+      - 9081:80
     command: ["python", "/app/telegram/manage.py", "runserver", "0:80"]
     environment:
       DEBUG: 'True'
-
-  telegram_celery:
-    container_name: telegram_celery
-    build: .
-    working_dir: /app/telegram
-    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
-    restart: unless-stopped
-    volumes:
-      - .:/app
-    depends_on:
-      - telegram_db
-      - telegram_redis
 
   telegram_beat:
     container_name: telegram_beat
@@ -49,3 +39,6 @@ services:
     container_name : telegram_redis
     image: redis:5.0.8
     restart: unless-stopped
+
+volumes:
+  telegram_db:
