@@ -7,8 +7,8 @@ from django.conf import settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'telegram.settings')
 app = Celery('telegram')
 
-# if you want to purge works queue
-app.control.purge()
+# # if you want to purge works queue
+# app.control.purge()
 
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
