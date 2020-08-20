@@ -54,6 +54,7 @@ def forward_msg(modeladmin, request, queryset):
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
     list_display = ('id', 'phone', 'admin_username', 'log_in_code')
+    list_editable = ('log_in_code',)
     search_fields = ['phone']
     actions = [forward_msg]
     form = AccountForm

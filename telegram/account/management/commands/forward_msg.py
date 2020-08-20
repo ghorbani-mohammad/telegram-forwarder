@@ -42,12 +42,13 @@ class Command(BaseCommand):
             return 'api invalid'
         except FloodWaitError:
             return 'flood error'
-
+        print('successful login to {}'.format(account.phone))
         @client.on(events.NewMessage(incoming=True))
         async def my_event_handler(event):
             chat = await event.get_chat()
             sender = await event.get_sender()
             if sender.username == account.admin_username:
+                account.refresh_from_db()
                 print('msg from admin')
                 for id in account.ids:
                     time.sleep(account.delay_between_msg)
