@@ -18,7 +18,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - 9081:80
+      - 9080:80
     command: ["python", "/app/telegram/manage.py", "runserver", "0:80"]
     environment:
       DEBUG: 'True'
