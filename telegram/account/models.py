@@ -37,6 +37,7 @@ class Account(BaseModel):
     msg = models.TextField(null=True, blank=True)
     admin_username = models.CharField(max_length=50, null=True, blank=True)
 
+    task_id = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.phone

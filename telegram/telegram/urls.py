@@ -18,7 +18,13 @@ from django.urls import path
 
 admin.site.site_header = "Telegram Bot"
 admin.site.site_title = "Telegram Bot"
+admin.site.index_title = "Telegram Bot"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
+
+admin.site.unregister(User)
+admin.site.unregister(Group)

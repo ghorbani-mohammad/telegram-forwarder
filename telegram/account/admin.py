@@ -42,10 +42,26 @@ def forward_msg(modeladmin, request, queryset):
     if len(account.ids) == 0:
         messages.error(request, "Please set user ids")
         return
-    forward_msg.delay(account.id)
+    task_id = forward_msg.delay(account.id)
+    account.task_id = task_id
+    account.save()
     modeladmin.message_user(request, ngettext(
         'messages will be sended.',
         'messages will be sendeds.',
+        queryset.count(),
+    ), messages.SUCCESS)
+    forward_msg.short_description = "From now, forwarded messages from admin, will be forwarded to ids"
+
+
+def terminate_task(modeladmin, request, queryset):
+    from .tasks import forward_msg
+    from celery.task.control import revoke
+    account = queryset[0]
+    print(account.task_id)
+    revoke(account.task_id, terminate=True)
+    modeladmin.message_user(request, ngettext(
+        'task will be terminated.',
+        'tasks will be terminated.',
         queryset.count(),
     ), messages.SUCCESS)
     forward_msg.short_description = "From now, forwarded messages from admin, will be forwarded to ids"
@@ -56,7 +72,7 @@ class AccountAdmin(admin.ModelAdmin):
     list_display = ('id', 'phone', 'admin_username', 'log_in_code')
     list_editable = ('log_in_code',)
     search_fields = ['phone']
-    actions = [forward_msg]
+    actions = [forward_msg, terminate_task]
     form = AccountForm
 
     def save_model(self, request, obj, form, change):
