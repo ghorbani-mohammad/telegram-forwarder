@@ -35,6 +35,30 @@ services:
       - telegram_db
       - telegram_redis
 
+  telegram_worker_1:
+    container_name: telegram_worker_1
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+  telegram_worker_2:
+    container_name: telegram_worker_2
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
   telegram_redis:
     container_name : telegram_redis
     image: redis:5.0.8
