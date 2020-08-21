@@ -28,3 +28,6 @@ from django.contrib.auth.models import Group
 
 admin.site.unregister(User)
 admin.site.unregister(Group)
+
+from account.models import Account
+Account.objects.update(logged=False, task_id='')

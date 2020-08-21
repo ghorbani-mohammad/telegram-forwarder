@@ -22,6 +22,8 @@ services:
     command: ["python", "/app/telegram/manage.py", "runserver", "0:80"]
     environment:
       DEBUG: 'True'
+    logging:
+      driver: none
 
   telegram_beat:
     container_name: telegram_beat

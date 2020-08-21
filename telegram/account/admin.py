@@ -58,6 +58,8 @@ def terminate_task(modeladmin, request, queryset):
     from celery.task.control import revoke
     account = queryset[0]
     print(account.task_id)
+    account.logged = False
+    account.save()
     revoke(account.task_id, terminate=True)
     modeladmin.message_user(request, ngettext(
         'task will be terminated.',
@@ -69,9 +71,11 @@ def terminate_task(modeladmin, request, queryset):
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('id', 'phone', 'admin_username', 'log_in_code')
+    list_display = ('id', 'phone', 'admin_username', 'log_in_code', 'logged')
+    readonly_fields = ('task_id', 'logged')
     list_editable = ('log_in_code',)
     search_fields = ['phone']
+    exclude = ['msg']
     actions = [forward_msg, terminate_task]
     form = AccountForm
 

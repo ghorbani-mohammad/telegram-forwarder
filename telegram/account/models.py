@@ -38,6 +38,7 @@ class Account(BaseModel):
     admin_username = models.CharField(max_length=50, null=True, blank=True)
 
     task_id = models.CharField(max_length=100, null=True, blank=True)
+    logged = models.BooleanField(default=False, blank=True)
 
     def __str__(self):
         return self.phone
