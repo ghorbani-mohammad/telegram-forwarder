@@ -1,13 +1,12 @@
-### Information
+### A Telegram Forwarder Bot
 
-- Server: **keylid1**
-- Port: 9080
-- Server path: `/var/www/igap_inf/`
-- Doc Link:
-- Nginx log files:
-    ```
-    access: /var/log/nginx/api-Telegram_access.log
-    error:  /var/log/nginx/api-Telegram_error.log
-    ```
-- Links:
-    * [mo-ghorbani.ir](https://mo-ghorbani.ir)
+For starting project you just need to execute this commands:
+
+- ./mn-api.sh migrate  (so tables will be ready)
+- ./mng-api.sh admin_user  (for create admin user, so you access to the django admin dashboard)
+- docker-compose up
+
+Boom, app is ready to use. Go to the admin dashboard in **ip:9080/admin/** and login to that an add accounts.
+
+
+For more description please see  [Telegram Forwarder Bot](https://mo-ghorbani.ir/posts/telegram_forwarder_bot_django)
