@@ -22,8 +22,8 @@ services:
     command: ["python", "/app/telegram/manage.py", "runserver", "0:80"]
     environment:
       DEBUG: 'True'
-    logging:
-      driver: none
+    # logging:
+    #   driver: none
 
   telegram_beat:
     container_name: telegram_beat
@@ -60,6 +60,275 @@ services:
     depends_on:
       - telegram_db
       - telegram_redis
+
+  telegram_worker_3:
+    container_name: telegram_worker_3
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+  telegram_worker_4:
+    container_name: telegram_worker_4
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+
+  telegram_worker_5:
+    container_name: telegram_worker_5
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+  telegram_worker_6:
+    container_name: telegram_worker_6
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+
+  telegram_worker_7:
+    container_name: telegram_worker_7
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+
+  telegram_worker_8:
+    container_name: telegram_worker_8
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+
+  telegram_worker_9:
+    container_name: telegram_worker_9
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+  telegram_worker_10:
+    container_name: telegram_worker_10
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+  telegram_worker_11:
+    container_name: telegram_worker_11
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+  telegram_worker_12:
+    container_name: telegram_worker_12
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+
+  telegram_worker_13:
+    container_name: telegram_worker_13
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+
+  telegram_worker_14:
+    container_name: telegram_worker_14
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+
+  telegram_worker_15:
+    container_name: telegram_worker_15
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+
+
+  telegram_worker_16:
+    container_name: telegram_worker_16
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+  
+  telegram_worker_17:
+    container_name: telegram_worker_17
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+
+  telegram_worker_18:
+    container_name: telegram_worker_18
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+
+  telegram_worker_19:
+    container_name: telegram_worker_19
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+
+  telegram_worker_20:
+    container_name: telegram_worker_20
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+
+  telegram_worker_21:
+    container_name: telegram_worker_21
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+  
+  telegram_worker_22:
+    container_name: telegram_worker_22
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+
+          
+  telegram_worker_23:
+    container_name: telegram_worker_23
+    build: .
+    working_dir: /app/telegram
+    command: ["celery", "-A", "telegram", "worker", "-l", "info"]
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - telegram_db
+      - telegram_redis
+        
+    
 
   telegram_redis:
     container_name : telegram_redis

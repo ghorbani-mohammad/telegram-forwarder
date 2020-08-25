@@ -27,7 +27,7 @@ class Command(BaseCommand):
             if not client.is_user_authorized():
                 client.send_code_request(account.phone)
                 print('before')
-                time.sleep(30)
+                time.sleep(120)
                 print('after')
             account = acc_models.Account.objects.get(pk=account_id)
             print(account.log_in_code)
