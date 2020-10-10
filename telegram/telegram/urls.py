@@ -30,4 +30,7 @@ admin.site.unregister(User)
 admin.site.unregister(Group)
 
 from account.models import Account
-Account.objects.update(logged=False, task_id='')
+try:
+    Account.objects.update(logged=False, task_id='')
+except:
+    pass
